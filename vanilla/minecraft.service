@@ -15,4 +15,4 @@ Type=simple
 ExecStart=/bin/sh -c "/bin/java -Xms1024M -Xmx3072M -jar /home/ec2-user/minecraft/server.jar --nogui < /run/minecraft.control"
 
 [Install]
-WantedBy=multi-user.target.
+WantedBy=multi-user.target
