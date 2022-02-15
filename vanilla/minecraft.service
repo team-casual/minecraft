@@ -2,8 +2,8 @@
 Description=Minecraft Server
 
 [Service]
-WorkingDirectory=/home/ec2-user/minecraft/server
-ExecStart=/bin/java -Xms1024M -Xmx3584M -jar /home/ec2-user/minecraft/server/server.jar
+WorkingDirectory=/home/ec2-user/minecraft
+ExecStart=/bin/java -Xms1024M -Xmx3584M -jar /home/ec2-user/minecraft/server.jar
 
 [Install]
 WantedBy=multi-user.target
