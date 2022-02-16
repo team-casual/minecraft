@@ -1,0 +1,8 @@
+[Unit]
+BindsTo=minecraft.service
+
+[Socket]
+ListenFIFO=/run/minecraft.control
+RemoveOnStop=true
+SocketMode=0660
+SocketUser=ec2-user

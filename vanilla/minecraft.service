@@ -2,8 +2,17 @@
 Description=Minecraft Server
 
 [Service]
+KillSignal=SIGCONT
+
+Sockets=minecraft.socket
+
+User=ec2-user
+
 WorkingDirectory=/home/ec2-user/minecraft
-ExecStart=/bin/java -Xms1024M -Xmx3584M -jar /home/ec2-user/minecraft/server.jar
+
+Type=simple
+
+ExecStart=/bin/sh -c "/bin/java -Xms1024M -Xmx3072M -jar /home/ec2-user/minecraft/server.jar --nogui < /run/minecraft.control"
 
 [Install]
 WantedBy=multi-user.target
