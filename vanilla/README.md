@@ -10,7 +10,7 @@ Before using it, you must ensure you have java installed, and update these value
  - WorkingDirectory must be set to the ABSOLUTE path from which you wish to run the server.
  - ExecStart must be updated with the path to the server.jar file, and the min and max memory allocation updated for your requirements.
 
-To use the minecraft.service file, place it into /etc/systemd/system/
+To use the `minecraft.service` file, place it and `minecraft.socket` into /etc/systemd/system/
 
 Then, run the following commands (may not have to run with sudo):
 
