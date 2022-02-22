@@ -2,15 +2,9 @@ import json
 import boto3
 
 
-def get_server_name(instance):
+def get_tag_from_instance(instance, key: str):
     for tag in instance.tags:
-        if tag['Key'] == 'Name':
-            return tag['Value']
-
-
-def get_minecraft_type(instance):
-    for tag in instance.tags:
-        if tag['Key'] == 'minecraft_type':
+        if tag['Key'] == key:
             return tag['Value']
 
 
@@ -35,8 +29,8 @@ def lambda_handler(event, context):
 
     for i in response:
         instance = {
-            "serverName": get_server_name(i),
-            "serverType": get_minecraft_type(i),
+            "serverName": get_tag_from_instance(i, "Name"),
+            "serverType": get_tag_from_instance(i, "minecraft_type"),
             "minecraftVersion": "",
             "availabilityZone": region,
             "instanceState": i.state["Name"]
