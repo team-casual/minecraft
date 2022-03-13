@@ -1,12 +1,10 @@
 import json
 import boto3
 
-
 def get_tag_from_instance(instance, key: str):
     for tag in instance.tags:
         if tag['Key'] == key:
             return tag['Value']
-
 
 def lambda_handler(event, context):
   print('received event:')
@@ -33,6 +31,7 @@ def lambda_handler(event, context):
             "serverType": get_tag_from_instance(i, "minecraft_type"),
             "minecraftVersion": "",
             "availabilityZone": region,
+            "instanceId": i.instance_id,
             "instanceState": i.state["Name"]
         }
 
