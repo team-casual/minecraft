@@ -10,14 +10,18 @@ def get_tag_from_instance(instance, key: str):
             return tag['Value']
 
 """
+Requires the following python layers:
+- discord_layer
+    Contains the discord_webhook lib and its dependencies.
+
 Requires the following Environment Variables:
 - discord_webhook_url
     The webhook url for the 'minecraft' Discord channel.
 
 The event value 'queryStringParameters' is retrieved from API Gateway.
 
-Timeout needs to be increased to allow the loop to run.
-Sometimes EC2 instances can take a few minutes to spin up.
+Timeout needs to be increased to allow the loop to run as sometimes 
+instances can take a few minutes to spin up.
 """
 def lambda_handler(event, context):
     region = "eu-west-2"
