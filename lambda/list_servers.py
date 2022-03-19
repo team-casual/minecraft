@@ -28,14 +28,16 @@ def lambda_handler(event, context):
     for i in response:
         instance = {
             "serverName": get_tag_from_instance(i, "Name"),
+            "instanceId": i.instance_id,
             "serverType": get_tag_from_instance(i, "minecraft_type"),
             "minecraftVersion": "",
             "availabilityZone": region,
-            "instanceId": i.instance_id,
             "instanceState": i.state["Name"]
         }
 
         if i.state["Name"] == "running":
+            instance["publicIpAddress"] = i.public_ip_address
+            instance["publicDnsName"] = i.public_dns_name
             instances['running'].append(instance)
         else :
             instances['stopped'].append(instance)
