@@ -90,6 +90,14 @@ Parameters:
     Type: String
     Description: "(Examples include SPIGOT, BUKKIT, TUINITY, etc) Refer to tag descriptions available here: https://github.com/itzg/docker-minecraft-server)"
 
+  FeedTheBeastModpackId:
+    Type: String
+    Description: "FTB modpack ID, instructions here: https://github.com/itzg/docker-minecraft-server#running-a-server-with-a-feed-the-beast-modpack"
+
+  FeedTheBeastModpackVersionId:
+    Type: String
+    Description: "FTB modpack version ID, instructions here: https://github.com/itzg/docker-minecraft-server#running-a-server-with-a-feed-the-beast-modpack"
+
   AdminPlayerNames:
     Type: String
     Description: Op/Administrator Players
@@ -187,6 +195,8 @@ Metadata:
           default: Optional Server Settings
         Parameters:
         - MinecraftTypeTag
+        - FeedTheBeastModpackId
+        - FeedTheBeastModpackVersionId
         - AdminPlayerNames
         - Difficulty
         - Whitelist
@@ -279,6 +289,8 @@ Metadata:
 
 Conditions:
   MinecraftTypeTagProvided: !Not [ !Equals [ !Ref MinecraftTypeTag, '' ] ]
+  FeedTheBeastModpackIdProvided: !Not [ !Equals [ !Ref FeedTheBeastModpackId, '' ] ]
+  FeedTheBeastModpackVersionIdProvided: !Not [ !Equals [ !Ref FeedTheBeastModpackVersionId, '' ] ]
   AdminPlayerNamesProvided: !Not [ !Equals [ !Ref AdminPlayerNames, '' ] ]
   DifficultyProvided: !Not [ !Equals [ !Ref Difficulty, '' ] ]
   WhitelistProvided: !Not [ !Equals [ !Ref Whitelist, '' ] ]
@@ -478,6 +490,13 @@ Resources:
       VPCZoneIdentifier:
         - !Ref SubnetA
         - !Ref SubnetB
+      Tags:
+        - Key: minecraft
+          PropagateAtLaunch: true
+          Value: ""
+        - Key: minecraft_type
+          PropagateAtLaunch: true
+          Value: ${MinecraftTypeTag}
     Metadata:
       LaunchEvent: !If [ DnsConfigEnabled, !GetAtt LaunchEvent.Arn, "" ]
 
@@ -595,6 +614,16 @@ Resources:
               - MinecraftTypeTagProvided
               - Name: "TYPE"
                 Value: !Sub "${MinecraftTypeTag}"
+              - !Ref 'AWS::NoValue'
+            - !If
+              - FeedTheBeastModpackIdProvided
+              - Name: "FTB_MODPACK_ID"
+                Value: !Sub "${FeedTheBeastModpackId}"
+              - !Ref 'AWS::NoValue'
+            - !If
+              - FeedTheBeastModpackVersionIdProvided
+              - Name: "FTB_MODPACK_VERSION_ID"
+                Value: !Sub "${FeedTheBeastModpackVersionId}"
               - !Ref 'AWS::NoValue'
             - !If
               - AdminPlayerNamesProvided
